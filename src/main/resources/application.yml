@@ -1,0 +1,68 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  messages:
+    encoding: UTF-8
+  banner:
+    charset: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    dynamic:
+      primary: default
+      datasource:
+        default:
+          # 如何才能不带模式访问数据库 请看文章https://blog.csdn.net/frankcheng5143/article/details/108219862
+          url: jdbc:dm://127.0.0.1:5236/oa?useUnicode=true&characterEncoding=utf-8
+          username: oa_test
+          password: oa_test
+          driver-class-name: dm.jdbc.driver.DmDriver
+    #数据库连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 池中维护的最小空闲连接数
+      minimum-idle: 5
+      # 池中最大连接数，包括闲置和使用中的连接
+      maximum-pool-size: 18
+      # 控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 60000
+      pool-name: mykHikariCP
+      # connection在连接池中的存活时间默认30分钟
+      max-lifetime: 1800000
+      # 等待来自池的连接的最大毫秒数,默认 30000
+      connection-timeout: 60000
+      connection-test-query: SELECT 1
+      # 数据库模式 达梦有模式的概念
+      schema: MONITOR_VISUAL
+    # 在初始化数据库时，遇到错误是否继续，默认false(不继续)
+    continue-on-error: false
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+
+
+logging:
+  path: ./jetco/logs
+  level:
+    org:
+      springframework: info
+    com:
+      jetco:
+        demo: info
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-http-post-size: -1
+
